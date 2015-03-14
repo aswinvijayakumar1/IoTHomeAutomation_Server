@@ -105,11 +105,29 @@ public class Device {
 	}
 
 	@GET
-	@Path("getTemp")
-	@Produces("application/json")
-	public DeviceModel getDeviceDetails() {
+	@Path("updateData")
+	public void putDeviceDetails() {
 		JSONObject json = getJsonFromUrl();
 		DeviceModel device = readFrom(json);
+		MongoDBFunctions mongoDB = new MongoDBFunctions();
+		mongoDB.insertNewDocument(device);
+	}
+
+	@GET
+	@Path("get<id>")
+	@Produces("application/json")
+	public DeviceModel getDeviceDetails(String id) {
+		MongoDBFunctions mongoDB = new MongoDBFunctions();
+		mongoDB.getDocument(id);
+	    return device;
+	}
+	
+	@GET
+	@Path("getAll")
+	@Produces("application/json")
+	public DeviceModel getAllDeviceDetails() {
+		MongoDBFunctions mongoDB = new MongoDBFunctions();
+		mongoDB.getAllDocuments();
 	    return device;
 	}
 }
